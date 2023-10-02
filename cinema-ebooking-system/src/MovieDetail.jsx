@@ -1,35 +1,28 @@
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import movieData from './MovieData';
 
-export default function MovieDetail() {
-    const location = useLocation();
-    const movie = location.state;
+function MovieDetail() {
+    const { movieId } = useParams();
+    
+    const selectedMovie = movieData.data.movies.find(movie => movie.id === movieId);
 
-    if (!movie) return <p>Movie not found!</p>;
+    if (!selectedMovie) return <p>Movie not found!</p>;
 
-    // Extract YouTube video ID from the URL
-    const youtubeVideoId = movie.trailer.split('v=')[1];
-    console.log(movie)
     return (
-        <div className="movie-detail-page">
-            <img 
-                className="movie-image"
-                src={movie.poster} 
-                alt={movie.title} 
-                width={movie.width} 
-                height={movie.height}
-            />
-            <h3>{movie.title}</h3>
-
-            {/* Embed YouTube video */}
+        <div>
+            <h1>{selectedMovie.title}</h1>
             <iframe 
                 width="560" 
                 height="315" 
-                src={`https://www.youtube.com/embed/${youtubeVideoId}`} 
-                title="YouTube video player" 
-                frameborder="0" 
+                src={selectedMovie.trailer.replace("watch?v=", "embed/")} 
+                title={selectedMovie.title}
+                frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-            ></iframe>
+                allowFullScreen
+                className="trailer">
+            </iframe>
         </div>
     );
 }
+
+export default MovieDetail;

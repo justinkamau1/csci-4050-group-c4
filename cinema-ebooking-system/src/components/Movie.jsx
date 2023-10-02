@@ -4,10 +4,7 @@ export default function Movie(props) {
     //     <Link key = {props.key} to={`/movies/${props.key}`}>{props.title}</Link>
     // }
     return (
-        <Link key = {props.id} to={{
-            pathname:`/movies/${props.id}`,
-            state: {...props}
-        }} className="movie--link">
+        <Link to={`/movie/${props.id}`} className="movie--link">
             <div className="movie" >
                 <img 
                     className="movie-image"
